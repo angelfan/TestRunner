@@ -107,9 +107,10 @@
 
             $('.project-edit').click(function () {
                 var project_id = $(this).data('id');
+
                 $.ajax({
                     type: "get",
-                    url: "/projects/${project_id}/edit",
+                    url: '/projects/' + project_id + '/edit',
                     success: function (data) {
                         $('#edit-modal-container').html(data);
                         $('#edit-project').modal({'show': true})

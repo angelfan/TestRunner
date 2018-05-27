@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import BigInteger, Column, Integer, String, BOOLEAN, DateTime, func, Text
-from sqlalchemy.dialects.postgresql.json import JSON
+from sqlalchemy.dialects.mysql.json import JSON
 from .Testcase_testgroup import Testcase_testgroup
 from .Testcasegroup import Testcasegroup
 from sqlalchemy import BigInteger, Column, BOOLEAN, DateTime, func, Text
@@ -46,7 +46,7 @@ class Result(db.Model):
     @classmethod
     def get_by_report_id(cls, report_id):
         return cls.query.filter_by(report_id=report_id).order_by(
-        Result.datachange_createtime)
+            Result.datachange_createtime)
 
 
 class Report(db.Model):
@@ -64,7 +64,7 @@ class Report(db.Model):
     datachange_createtime = Column(DateTime(True), server_default=func.now())
     datachange_lasttime = Column(DateTime(True), index=True, onupdate=func.now())
 
-    def __init__(self, testgroup_id,  **kwargs):
+    def __init__(self, testgroup_id, **kwargs):
         kwargs["testgroup_id"] = testgroup_id
 
         super().__init__(**kwargs)

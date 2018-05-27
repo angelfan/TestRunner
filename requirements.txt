@@ -27,6 +27,7 @@ Jinja2==2.10
 kombu==4.1.0
 Mako==1.0.7
 MarkupSafe==1.0
+marshmallow==2.15.3
 ordereddict==1.1
 paramiko==2.4.1
 pyasn1==0.4.2
@@ -52,4 +53,3 @@ Werkzeug==0.14.1
 WTForms==2.1
 WTForms-Alchemy==0.16.7
 WTForms-Components==0.10.3
-marshmallow==3.0.0b11.dev0
