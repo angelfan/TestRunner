@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, Integer, String, Text, Boolean
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.dialects.postgresql.json import JSON
+from sqlalchemy.dialects.mysql.json import JSON
 from app import db
 
 
