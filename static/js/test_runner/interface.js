@@ -1,35 +1,23 @@
 
 $(document).ready(function(){
 
-    $.api_request = function(l, url, method, header, param){
+    $.api_request = function(editor){
 
+        var form_data = $.get_form_data(editor);
 
         $.ajax({
             url: "/interface/run",
             method: "POST",
-            data: {
-                "interface_url": url,
-                "interface_method": method,
-                "interface_header": header,
-                "interface_body": param
-            },
+            data: form_data,
             success: function(data){
+                var response = $("#interface_response");
                 try {
-                    var container = document.getElementById('interface_response');
-
-                    container.innerHTML = "";
-
-                    var options = {
-                        mode: 'view'
-                    };
-                    var editor = new JSONEditor(container, options, JSON.parse(data));
-
-                    editor.expandAll();
-                } catch (SyntaxError) {
-                    alert("请求失败！")
+                    var out = JSON.stringify(JSON.parse(data), null, 2);
+                    response.text(out);
+                    //l.stop();
+                }catch (SyntaxError) {
+                    response.text(data)
                 }
-
-                l.stop();
             }
 
         });
@@ -37,29 +25,21 @@ $(document).ready(function(){
 
     };
 
-    $.api_save = function(interface_name,module_id,  url, method, header, param){
+    $.api_save = function(editor){
 
-        var csrf_token = $("#csrf_token").val();
+        var form_data = $.get_form_data(editor);
 
         $.ajax({
-            url: "/interface",
+            url: "#",
             method: "POST",
-            data: {
-                "csrf_token": csrf_token,
-                "interface_name": interface_name,
-                "module_id":module_id,
-                "interface_url": url,
-                "interface_method": method,
-                "interface_header": header,
-                "interface_body": param,
-                "is_active": true
-            },
+            data: form_data,
             success: function(data){
                 if (data.ret == 1){
-                    alert("添加成功");
-                    window.location.href = "/interface_list.html";
+                    alert("添加成功！");
+                    window.location.reload();
                 }else{
-                    alert(data.error);
+                    console.log(data);
+                    alert(JSON.stringify(data.error));
                 }
             }
 
@@ -68,85 +48,29 @@ $(document).ready(function(){
 
     };
 
-    $.get_api_data = function(){
+    $.get_form_data = function(editor){
 
-        var interface_name = $("#interface_name").val();
-        var module_id = $("#module_id").val();
-        var interface_url = $("#interface_url").val();
-        var interface_method = $("#interface_method").text();
+        var form_data = $("#interface_form").serializeArray();
+        console.log(form_data);
+        var type_select = $(".body_type.active").attr("id");
+        var data_type = new Object();
+        data_type["name"] = "data_type";
+        data_type["value"] = type_select;
 
-        var headers = new Object();
-        var head_key = $(".key_header_table");
+        form_data.push(data_type);
 
-        var form_data = new Object();
-        var form_data_key = $(".key_form_data");
+        if(type_select == "JSON_data_select"){
 
-        var urlencoded_data = new Object();
-        var urlencoded_data_key = $(".key_urlencoded_data");
-
-        $(head_key).each(function(){
-            headers[$(this).val()] = $(this).parent().next("td").children(".value_header_table").val()
-
-        });
-        headers = JSON.stringify(headers);
-
-        $(form_data_key).each(function(){
-            form_data[$(this).val()]= $(this).parent().next("td").children(".value_form_data").val()
-
-        });
-        form_data = JSON.stringify(form_data);
-
-        $(urlencoded_data_key).each(function(){
-            urlencoded_data[$(this).val()]= $(this).parent().next("td").children(".value_urlencoded_data").val()
-
-        });
-        urlencoded_data = JSON.stringify(urlencoded_data);
-
-
-        return {
-            "interface_name": interface_name,
-            "module_id": module_id,
-            "interface_url": interface_url,
-            "interface_method":interface_method,
-            "headers":headers,
-            "form_data":form_data,
-            "urlencoded_data":urlencoded_data
+            var json = new Object();
+            var json_data = editor.getText();
+            console.log(json_data);
+            json["name"] = "interface_json";
+            json["value"] = json_data;
+            form_data.push(json)
 
         }
-    };
+        return form_data
 
-    $.table_add_tr = function(table_id){
-
-        var table = document.getElementById(table_id);
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        cell1.innerHTML = '<input type="checkbox" class="require_'+table_id+'" checked>';
-        cell2.innerHTML = '<input type="text" class="form-control key_'+table_id+'">';
-        cell3.innerHTML = '<input type="text" class="form-control value_'+table_id+'">';
-    };
-
-    $.table_delete_tr = function(table_id){
-
-        var table = document.getElementById(table_id);
-
-        $(".require_"+table_id+":checked").each(function(){
-
-            var index = $(this).parent().parent().index();
-            table.deleteRow(index);
-        });
-
-    };
-
-    $.set_header_type = function(type){
-        var key = $("#header_table tbody tr:eq(0) td:eq(1) input");
-        var value = $("#header_table tbody tr:eq(0) td:eq(2) input");
-
-        key.val("Content-type");
-        value.val(type);
-
-    };
-
+    }
 
 });

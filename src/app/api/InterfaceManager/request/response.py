@@ -1,4 +1,6 @@
 from .util import set_variable
+from requests import Response
+
 
 class DictObj(dict):
     def __init__(self):
@@ -53,7 +55,11 @@ class ApiResponse(DictObj):
         return str(self.data)
 
     def get_value_by_key(self, key):
-        return eval("self.data."+key)
+
+        if not key:
+            return
+        tmp = "self.data."+key
+        return eval(tmp)
 
     def validate(self, verification):
         """
@@ -71,13 +77,29 @@ class ApiResponse(DictObj):
 
             # 如果需要保存
             if value[1]:
-
                 set_variable(key, self.get_value_by_key(key))
 
+            v_type = value[2]
+            v_value = value[0]
             # 验证值
-            if value[0] is None:
+            if v_type == "None":
                 continue
-            if real_value != value[0]:
+
+            # 转换类型
+            try:
+                if v_type == "str":
+                    v_value = str(v_value)
+                if v_type == "int":
+                    v_value = int(v_value)
+                if v_type == "float":
+                    v_value = float(v_value)
+                if v_type == "list":
+                    v_value = list(v_value)
+                if v_type == "dict":
+                    v_value = dict(v_value)
+                if real_value != v_value:
+                    result = 3
+            except ValueError:
                 result = 3
 
         return result
