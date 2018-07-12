@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request
+from flask import render_template, request, flash, redirect
 from module.cancel_vc_order_log import CancelVcOrderLog
 from app.api import api
 from app.handler import register
+from jobs.schedule import cancel_vc_orders
 import pymssql
 import setting
 import json
@@ -33,3 +34,8 @@ def cancel_vc_order_log_list_detail(id):
     return render_template("cancel_vc_order_logs/detail.html", log=log, detail=json.dumps(detail))
 
 
+@register(api, "/cancel_vc_orders_sync/", methods=["GET"])
+def cancel_vc_orders_sync():
+    cancel_vc_orders()
+    flash(u'操作成功', category='success')
+    return redirect("/cancel_vc_order_logs.html")
