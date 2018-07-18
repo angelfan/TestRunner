@@ -28,6 +28,7 @@
                                 <th>order_id</th>
                                 <th>message</th>
                                 <th>success</th>
+                                <th>取消时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                     <td>{{ log.order_id }}</td>
                                     <td>{{ log.message }}</td>
                                     <td>{{ log.success }}</td>
+                                    <td>{{ log.datachange_createtime }}</td>
                                     <td>
                                         <a href="{{ url_for('api.cancel_vc_order_log_list_detail', id=log.id) }}"
                                            class="btn btn-primary">详情</a>

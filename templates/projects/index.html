@@ -35,6 +35,7 @@
                                 <th>项目版本</th>
                                 <th>项目简介</th>
                                 <th>是否可用</th>
+                                <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -47,6 +48,7 @@
                                     <td>{{ project.project_version }}</td>
                                     <td>{{ project.project_desc }}</td>
                                     <td>{{ project.is_active }}</td>
+                                    <td>{{ project.datachange_createtime }}</td>
                                     <td>
                                         <button class="project-edit btn btn-primary" data-id="{{ project.id }}">
                                             编辑
