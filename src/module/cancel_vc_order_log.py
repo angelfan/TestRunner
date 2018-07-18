@@ -11,3 +11,4 @@ class CancelVcOrderLog(db.Model):
     order_id = Column(BigInteger, nullable=False, index=True)
     message = Column(String(255))
     success = Column(BOOLEAN, default=False)
+    datachange_createtime = Column(DateTime(True), server_default=func.now())
