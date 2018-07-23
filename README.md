@@ -23,7 +23,8 @@ deactivate
 ## development
 
 ```
-cp src/app/config.py.example src/app/config.py
+cp src/config.py.example src/config.py
+cp src/setting.py.example src/setting.py
 cp src/jobs/schedule.py.example src/jobs/schedule.py
 source venv/bin/activate
 cd src && python manage.py db upgrade && cd ..
@@ -94,3 +95,5 @@ config.py  static  uwsgi.ini  uwsgi.log  uwsgi.pid  uwsgi.sock  venv
 ```
 mark src as source root
 ```
+
+## http://gree2.github.io/python/setup/2017/04/19/python-instal-pymssql-on-mac`
