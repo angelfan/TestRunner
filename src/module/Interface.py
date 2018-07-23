@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import BigInteger, Column, String, BOOLEAN, DateTime, Text, func
-from sqlalchemy.dialects.postgresql.json import JSON
+from sqlalchemy.dialects.mysql.json import JSON
 from sqlalchemy.orm.exc import NoResultFound
 from app import db
 from app.logger import logger
@@ -13,12 +13,12 @@ class Interface(db.Model):
 
     id = Column(BigInteger, primary_key=True)
     module_id = Column(BigInteger)
-    interface_name = Column(String, nullable=False, index=True)
-    interface_url = Column(Text, nullable=False)
+    interface_name = Column(String(200), nullable=False, index=True)
+    interface_url = Column(String(200), nullable=False)
     interface_header = Column(JSON, nullable=True)
     interface_query = Column(JSON, nullable=True)
     interface_body = Column(JSON, nullable=True)
-    interface_method = Column(String, nullable=False)
+    interface_method = Column(String(10), nullable=False)
     interface_desc = Column(Text, nullable=True)
     is_active = Column(BOOLEAN, nullable=False, default=True)
     datachange_createtime = Column(DateTime(True), server_default=func.now())

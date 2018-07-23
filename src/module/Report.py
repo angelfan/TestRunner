@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import BigInteger, Column, Integer, String, BOOLEAN, DateTime, func, Text
-from sqlalchemy.dialects.postgresql.json import JSON
+from sqlalchemy.dialects.mysql.json import JSON
 from .Testcase_testgroup import Testcase_testgroup
 from .Testcasegroup import Testcasegroup
 from sqlalchemy import BigInteger, Column, BOOLEAN, DateTime, func, Text

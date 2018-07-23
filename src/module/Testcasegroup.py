@@ -11,7 +11,7 @@ class TestCaseType(db.Model):
 
     id = Column(BigInteger, primary_key=True)
     type_code = Column(BigInteger, index=True, nullable=False)
-    type_name = Column(String, nullable=False)
+    type_name = Column(String(255), nullable=False)
     is_active = Column(BOOLEAN, nullable=False)
 
     def __repr__(self):
@@ -27,10 +27,10 @@ class Testcasegroup(db.Model):
 
     id = Column(BigInteger, primary_key=True)
     module_id = Column(BigInteger, index=True, nullable=False)
-    testcase_group_name = Column(String, nullable=False)
+    testcase_group_name = Column(String(255), nullable=False)
     testcase_type = Column(BigInteger, index=True, nullable=False)
     runner_setting_id = Column(Integer)
-    testcase_desc = Column(String, nullable=False)
+    testcase_desc = Column(String(255), nullable=False)
     is_active = Column(BOOLEAN, nullable=False, default=True)
     datachange_createtime = Column(DateTime(True), server_default=func.now())
     datachange_lasttime = Column(DateTime(True), index=True, onupdate=func.now())
@@ -69,3 +69,4 @@ class Testcasegroup(db.Model):
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get(id)
+

@@ -10,10 +10,10 @@ class TestInterfacecase(db.Model):
     __tablename__ = 'autotest_interface_testcase'
 
     id = Column(BigInteger, primary_key=True)
-    interface_url = Column(String, nullable=False)
-    testcase_name = Column(String, nullable=False)
+    interface_url = Column(String(255), nullable=False)
+    testcase_name = Column(String(255), nullable=False)
     module_id= Column(BigInteger, nullable=False)
-    testcase_method = Column(String, nullable=False)
+    testcase_method = Column(String(255), nullable=False)
     testcase_header = Column(JSON)
     testcase_query = Column(JSON)
     testcase_body = Column(JSON)
@@ -43,7 +43,7 @@ class TestUIcase(db.Model):
     __tablename__ = 'autotest_UI_testcase'
 
     id = Column(BigInteger, primary_key=True)
-    testcase_name = Column(String, nullable=False)
+    testcase_name = Column(String(255), nullable=False)
     is_active = Column(BOOLEAN, nullable=False, default=True)
     datachange_createtime = Column(DateTime(True), server_default=func.now())
     datachange_lasttime = Column(DateTime(True), index=True, onupdate=func.now())

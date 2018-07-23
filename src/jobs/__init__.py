@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from celery import Celery
-
-_celery = None
+from app import celery
+from . import schedule
 
 """
 单纯的异步执行

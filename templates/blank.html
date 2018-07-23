@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/favicon.ico">
 
     <title>
         {% block title %}
-            TestRunner
+            Flower
         {% endblock %}
     </title>
 
@@ -46,7 +47,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">TestRunner</a>
+            <a class="navbar-brand" href="index.html">
+                Flower
+            </a>
         </div>
         <!-- /.navbar-header -->
 
@@ -90,10 +93,12 @@
                     <li>
                         <a href="#"><i class="fa fa-clock-o fa-fw"></i>定时任务<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="/timer.html">定时任务</a>
+{#                            <li>#}
+{#                                <a href="/timer.html">定时任务</a>#}
                             </li>
-
+                            <li>
+                                <a href="{{ url_for('api.cancel_vc_order_log_list') }}">取消订单</a>
+                            </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -110,7 +115,7 @@
                                 <a href="/interface_list.html">接口文档</a>
                             </li>
                             <li>
-                                <a href="/interface.html" >新建接口</a>
+                                <a href="/interface.html">新建接口</a>
                             </li>
 
                         </ul>
